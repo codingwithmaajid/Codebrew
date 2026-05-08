@@ -1,0 +1,111 @@
+.app-root {
+    -fx-background-color: #0b0f14;
+    -fx-font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.shell {
+    -fx-background-color: #0b0f14;
+}
+
+.app-title {
+    -fx-font-size: 30px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #f3f7fb;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #91a2b4;
+}
+
+.badge {
+    -fx-background-color: #13251f;
+    -fx-border-color: #2aa876;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 7px 10px;
+    -fx-text-fill: #69e1ad;
+    -fx-font-size: 12px;
+}
+
+.panel {
+    -fx-background-color: #101720;
+    -fx-border-color: #243040;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 16px;
+}
+
+.section-title {
+    -fx-text-fill: #f3f7fb;
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+}
+
+.text-area {
+    -fx-background-color: #070b10;
+    -fx-control-inner-background: #070b10;
+    -fx-text-fill: #d9e4ef;
+    -fx-highlight-fill: #2aa876;
+    -fx-highlight-text-fill: #06100c;
+    -fx-prompt-text-fill: #657589;
+    -fx-border-color: #253244;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 13px;
+}
+
+.primary-button,
+.secondary-button {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 9px 14px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: #2aa876;
+    -fx-text-fill: #06100c;
+}
+
+.secondary-button {
+    -fx-background-color: #172230;
+    -fx-border-color: #334357;
+    -fx-text-fill: #d9e4ef;
+}
+
+.result-box {
+    -fx-background-color: #070b10;
+    -fx-border-color: #253244;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 16px;
+}
+
+.metric-row {
+    -fx-padding: 2px 0 2px 0;
+}
+
+.metric-key {
+    -fx-text-fill: #7d8da1;
+    -fx-font-size: 12px;
+}
+
+.metric-value {
+    -fx-text-fill: #f3f7fb;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+}
+
+.result-title {
+    -fx-text-fill: #69e1ad;
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+}
+
+.result-line {
+    -fx-text-fill: #c7d3df;
+    -fx-font-size: 12px;
+    -fx-line-spacing: 2px;
+}
