@@ -1,86 +1,178 @@
 # StackSage JVM
 
-StackSage JVM is an open-source Java debugging assistant that transforms intimidating JVM stack traces into understandable explanations and actionable debugging guidance.
+**Paste a JVM crash. Get the story, source, and fix.**
+
+StackSage JVM is a small Java CLI that turns noisy JVM stack traces into a readable debugging report. It is built for fast terminal use during hackathons, demos, interviews, and everyday Java debugging.
+
+## The Problem
+
+JVM stack traces are useful, but they are often hard to read under pressure. Beginners see a wall of package names. Experienced developers still lose time finding the real failing line, the exception meaning, and the next fix to try.
+
+StackSage keeps the workflow simple: pipe in a crash or pass a file, then get a clean explanation with the likely source location and practical fix suggestions.
 
 ## Features
 
-- Paste JVM exceptions, stack traces, or runtime logs
-- Detect common Java exceptions
-- Extract probable root file, line, and method
-- Explain exceptions in beginner-friendly language
-- Suggest debugging steps and prevention tips
-- Runs locally with no code execution or network dependency at runtime
-- Dark, terminal-inspired JavaFX UI
+- Reads stack traces from a file or stdin
+- Detects common Java exceptions
+- Highlights the likely failing file, line, and method
+- Shows the crash path from stack frames
+- Explains what happened in plain English
+- Suggests focused fixes
+- Runs locally with Java and Maven
+- No Spring Boot, no database, no background service
 
-## Supported MVP Exceptions
-
-- `NullPointerException`
-- `IllegalArgumentException`
-- `NumberFormatException`
-- `ArrayIndexOutOfBoundsException`
-- `ConcurrentModificationException`
-- `ClassNotFoundException`
-- `IOException`
-- `SQLException`
-
-Unknown exceptions still get a generic stack-trace debugging guide.
-
-## Requirements
-
-- Java 21
-- Maven 3.9+
-
-## Run
+## Installation
 
 ```bash
-mvn javafx:run
+curl -sSL https://raw.githubusercontent.com/codingwithmaajid/StackSageJVM/main/install.sh | bash
 ```
 
-## Test
+The installer builds the jar and creates:
+
+```text
+~/.local/share/stacksage/stacksage.jar
+~/.local/bin/stacksage
+```
+
+Make sure `~/.local/bin` is on your `PATH`.
+
+If your shell cannot find `stacksage` after install, run:
 
 ```bash
-mvn test
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ## Usage
 
-1. Paste a JVM stack trace into the input panel.
-2. Click `Analyze`.
-3. Review the detected exception, source location, explanation, and fix suggestions.
-4. Use `Copy` to copy the formatted output.
+Show the banner and usage:
 
-Example input:
+```bash
+stacksage
+```
+
+Analyze a stack trace file:
+
+```bash
+stacksage error.txt
+```
+
+Analyze piped input:
+
+```bash
+cat error.txt | stacksage
+```
+
+Show help:
+
+```bash
+stacksage --help
+```
+
+Run the jar directly:
+
+```bash
+java -jar target/stacksage.jar error.txt
+cat error.txt | java -jar target/stacksage.jar
+```
+
+Build locally:
+
+```bash
+mvn clean package
+```
+
+## Example
+
+Input:
 
 ```text
 Exception in thread "main" java.lang.NullPointerException: Cannot invoke "String.length()" because "name" is null
-    at dev.example.UserService.createUser(UserService.java:42)
-    at dev.example.Main.main(Main.java:12)
+    at com.demo.UserService.createUser(UserService.java:42)
+    at com.demo.App.main(App.java:12)
 ```
+
+Output:
+
+```text
+Detected Error
+--------------
+NullPointerException
+
+Severity
+--------
+High
+
+Likely Location
+---------------
+UserService.java:42 in com.demo.UserService.createUser
+
+Crash Path
+----------
+com.demo.UserService.createUser (UserService.java:42)
+com.demo.App.main (App.java:12)
+
+What Happened
+-------------
+Your code tried to use an object reference that currently points to null.
+JVM message: Cannot invoke "String.length()" because "name" is null
+
+Fix Mode
+--------
+- Inspect the variable used on the reported line.
+- Add a null check before dereferencing.
+- Initialize required objects before passing them into this method.
+
+Learning Note
+-------------
+Null means the reference points to no object. The fix is usually at the assignment or method return before the crash line.
+```
+
+## Supported Errors
+
+- `NullPointerException`
+- `ArrayIndexOutOfBoundsException`
+- `NumberFormatException`
+- `ClassNotFoundException`
+- `IllegalArgumentException`
+- `ConcurrentModificationException`
+- `IOException`
+- `SQLException`
+
+Unknown exceptions still produce a generic debugging report.
+
+## Tech Stack
+
+- Java 21
+- Maven
+- Plain Java CLI
 
 ## Project Structure
 
 ```text
-src/main/java/dev/maajid/stacksage
-├── App.java
-├── analyzer
-├── kb
-├── models
-├── parser
-└── ui
+StackSageJVM/
+├── pom.xml
+├── README.md
+├── install.sh
+└── src/
+    └── main/
+        ├── java/
+        │   ├── App.java
+        │   ├── StackTraceAnalyzer.java
+        │   └── ErrorKnowledgeBase.java
+        └── resources/
 ```
 
 ## Roadmap
 
-- AI Explain Mode using Gemini or OpenAI
-- GitHub Actions log analysis
-- Community knowledge base for new exceptions
-- IntelliJ and VSCode plugins
-- Localization for classroom use
+- More JVM exception guides
+- Better `Caused by` chain detection
+- Severity tuning by exception and crash context
+- JSON output mode for CI logs
+- GitHub Actions log examples
+- IntelliJ and VS Code integrations later
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and contribution guidelines.
+Open-source contributions are welcome. Good first contributions include adding exception explanations, improving parsing for real-world stack traces, tightening README examples, and testing StackSage against logs from different Java frameworks.
 
-## License
-
-MIT License. See [LICENSE](LICENSE).
+Keep contributions aligned with the MVP goals: simple CLI, plain Java, no database, no Spring Boot, and no extra architecture until the tool earns it.
