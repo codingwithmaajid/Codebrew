@@ -18,16 +18,16 @@ StackSage keeps the workflow simple: pipe in a crash or pass a file, then get a 
 - Shows the crash path from stack frames
 - Explains what happened in plain English
 - Suggests focused fixes
-- Runs locally with Java and Maven
+- Installs with Java only from a prebuilt release jar
 - No Spring Boot, no database, no background service
 
 ## Installation
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/codingwithmaajid/StackSageJVM/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/codingwithmaajid/Codebrew/main/install.sh | bash
 ```
 
-The installer builds the jar and creates:
+The installer downloads the latest release jar and creates:
 
 ```text
 ~/.local/share/stacksage/stacksage.jar
@@ -75,7 +75,7 @@ java -jar target/stacksage.jar error.txt
 cat error.txt | java -jar target/stacksage.jar
 ```
 
-Build locally:
+Build locally from source:
 
 ```bash
 mvn clean package
@@ -143,7 +143,7 @@ Unknown exceptions still produce a generic debugging report.
 ## Tech Stack
 
 - Java 21
-- Maven
+- Maven for local source builds
 - Plain Java CLI
 
 ## Project Structure
